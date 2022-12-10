@@ -16,5 +16,5 @@ use {
 # Next steps
 - [X] Run selection
 - [ ] Better buffer names
-- [ ] Folder to manage scripts in plugin
+- [X] Folder to manage scripts in plugin
 - [ ] Telescope to find scripts managed by the plugin

@@ -1,6 +1,9 @@
 local ui = require('easy-cmd.ui')
+local fs = require('easy-cmd.fs')
 
-M = {}
+M = {
+  path = "~/.scripts/"
+}
 
 local function output_to_buf(bufnr)
   return function(_, data)
@@ -29,7 +32,11 @@ local function get_visual_selection()
   return lines
 end
 
-M.run_command = function()
+M.setup = function()
+  fs.setup_folder(M.path)
+end
+
+M.run = function()
   local bufnr = vim.api.nvim_get_current_buf()
 
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)

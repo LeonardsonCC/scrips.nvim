@@ -4,6 +4,15 @@ A plugin that just run the current file to the shell and shows the output in a p
 # Requirements
 - Plenary
 
+# Install
+Using Packer
+```lua
+use {
+    "LeonardsonCC/easy-cmd.nvim",
+    requires = "nvim-lua/plenary.nvim"
+}
+```
+
 # Next steps
 - [X] Run selection
 - [ ] Better buffer names

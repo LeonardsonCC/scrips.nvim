@@ -23,6 +23,7 @@ end
 local function open_file(name)
   local expanded_file = vim.fn.expand(M.path .. name)
   vim.cmd('e ' .. expanded_file)
+  vim.cmd('set syntax=sh')
 end
 
 M.open_or_create_file = function(name)

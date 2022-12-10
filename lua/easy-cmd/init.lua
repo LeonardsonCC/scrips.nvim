@@ -14,7 +14,6 @@ M.run_command = function()
   end
 
   vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, lines)
-  vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, lines)
 
   vim.fn.jobstart(cmd, {
     stdout_buffered = true,

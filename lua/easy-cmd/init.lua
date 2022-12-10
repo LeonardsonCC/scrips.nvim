@@ -16,7 +16,7 @@ local function get_visual_selection()
   local n_lines = math.abs(s_end[2] - s_start[2]) + 1
   local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
 
-  if lines[1] == nil then
+  if #lines == 0 then
     return {}
   end
 
@@ -33,8 +33,10 @@ M.run_command = function()
   local bufnr = vim.api.nvim_get_current_buf()
 
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
-  if get_visual_selection() ~= {} then
-    lines = get_visual_selection()
+  local visual_selection = get_visual_selection()
+  print(vim.inspect(visual_selection), #visual_selection)
+  if #visual_selection > 0 then
+    lines = visual_selection
   end
 
   local win_info = ui.open_window()

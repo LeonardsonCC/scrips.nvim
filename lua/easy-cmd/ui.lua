@@ -3,6 +3,7 @@ local popup = require("plenary.popup")
 local M = {
   win_id = nil,
   bufnr = nil,
+  num = 0,
 }
 
 local function create_window()
@@ -54,9 +55,10 @@ function M.open_window()
   M.win_id = win_info.win_id
   M.bufnr = win_info.bufnr
 
+  M.num = M.num + 1
+  vim.api.nvim_buf_set_name(M.bufnr, "EasyCmd-" .. M.num)
+
   vim.api.nvim_win_set_option(M.win_id, "number", true)
-  -- TODO put a nice name on the buf
-  -- vim.api.nvim_buf_set_name(M.bufnr, "easycmd-menu")
   vim.api.nvim_buf_set_option(M.bufnr, "filetype", "easycmd")
   vim.api.nvim_buf_set_keymap(
     M.bufnr,
@@ -72,10 +74,6 @@ function M.open_window()
     "<CMD>lua require('easy-cmd.ui').close_window()<CR>",
     { silent = true }
   )
-  -- TODO refactor this to use lua bindings
-  -- vim.cmd(
-  --   "autocmd BufLeave <buffer> ++nested ++once silent lua require('harpoon.ui').toggle_quick_menu()"
-  -- )
 
   return {
     win_id = M.win_id,

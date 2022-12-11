@@ -14,8 +14,8 @@ local function create_window()
   local bufnr = vim.api.nvim_create_buf(true, true)
 
   local win_id, win = popup.create(bufnr, {
-    title = "EasyCmd",
-    highlight = "EasyCmdWindow",
+    title = "Scrips",
+    highlight = "ScripsWindow",
     line = math.floor(((vim.o.lines - height) / 2) - 1),
     col = math.floor((vim.o.columns - width) / 2),
     minwidth = width,
@@ -26,7 +26,7 @@ local function create_window()
   vim.api.nvim_win_set_option(
     win.border.win_id,
     "winhl",
-    "Normal:EasyCmdBorder"
+    "Normal:ScripsBorder"
   )
 
   return {
@@ -56,10 +56,10 @@ function M.open_window()
   M.bufnr = win_info.bufnr
 
   M.num = M.num + 1
-  vim.api.nvim_buf_set_name(M.bufnr, "EasyCmd-" .. M.num)
+  vim.api.nvim_buf_set_name(M.bufnr, "Scrips-" .. M.num)
 
   vim.api.nvim_win_set_option(M.win_id, "number", true)
-  vim.api.nvim_buf_set_option(M.bufnr, "filetype", "easycmd")
+  vim.api.nvim_buf_set_option(M.bufnr, "filetype", "Scrips")
   vim.api.nvim_buf_set_keymap(
     M.bufnr,
     "n",

@@ -9,12 +9,7 @@ M = {
 local function run(lines)
   local win_info = ui.open_window()
 
-  local cmd = ""
-  for _, line in pairs(lines) do
-    cmd = cmd .. "\n" .. line
-  end
-
-  vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, lines)
+  local cmd = table.concat(lines, "\n")
 
   vim.fn.jobstart(cmd, {
     stdout_buffered = true,

@@ -1,5 +1,3 @@
-local popup = require("plenary.popup")
-
 local M = {
   win_id = nil,
   bufnr = nil,
@@ -7,27 +5,12 @@ local M = {
 }
 
 local function create_window()
-  local width = 100
-  local height = 30
-  local borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" }
-
   local bufnr = vim.api.nvim_create_buf(true, true)
 
-  local win_id, win = popup.create(bufnr, {
-    title = "Scrips",
-    highlight = "ScripsWindow",
-    line = math.floor(((vim.o.lines - height) / 2) - 1),
-    col = math.floor((vim.o.columns - width) / 2),
-    minwidth = width,
-    minheight = height,
-    borderchars = borderchars,
-  })
-
-  vim.api.nvim_win_set_option(
-    win.border.win_id,
-    "winhl",
-    "Normal:ScripsBorder"
-  )
+  -- TODO refactor this using lua
+  vim.cmd("set splitright")
+  vim.cmd("vert sb" .. bufnr)
+  local win_id = vim.api.nvim_get_current_win()
 
   return {
     bufnr = bufnr,
@@ -44,6 +27,12 @@ end
 
 function M.open_window()
   if M.win_id ~= nil and vim.api.nvim_win_is_valid(M.win_id) then
+    vim.api.nvim_buf_set_lines(M.bufnr, -1, -1, false, {
+      "",
+      "",
+      "New command",
+      "",
+    })
     return {
       win_id = M.win_id,
       bufnr = M.bufnr,
@@ -88,3 +77,4 @@ function M.close_window()
 end
 
 return M
+

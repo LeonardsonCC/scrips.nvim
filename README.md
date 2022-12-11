@@ -33,18 +33,23 @@ You must set your own keymaps. This is what I personally use:
 ```lua
 -- scrips
 local scrips = require('scrips')
+
+-- new script
 vim.keymap.set('n', '<Leader>en', scrips.new_script, { noremap = true })
+
+-- find scripts
 vim.keymap.set('n', '<Leader>se', require('telescope').extensions.scrips.find_file, { noremap = true })
 
--- Idk why, but the visual selection only works this way atm
-vim.keymap.set('v', '<Leader>en', ':lua require("scrips").run()<CR>', { noremap = true })
+-- Run
+vim.keymap.set('n', '<Leader>er', scrips.run_paragraph, { noremap = true })
+vim.keymap.set('n', '<Leader>eR', scrips.run_file, { noremap = true })
 ```
 
 ## What I pretend to do
-- [X] Run selection
+- [ ] Run selection
 - [X] Folder to manage scripts in plugin
 - [X] Telescope to find scripts managed by the plugin
 - [ ] Better buffer names
 - [ ] Run the file based on his header e.g. `#! /bin/bash`
-- [ ] Run paragraph
+- [X] Run paragraph
 - [ ] Subfolders to help manage the scripts

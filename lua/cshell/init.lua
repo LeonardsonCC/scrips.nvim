@@ -1,6 +1,6 @@
-local buf = require('easy-cmd.buf')
-local ui = require('easy-cmd.ui')
-local fs = require('easy-cmd.fs')
+local buf = require('cshell.buf')
+local ui = require('cshell.ui')
+local fs = require('cshell.fs')
 
 M = {
   path = "~/.scripts/"

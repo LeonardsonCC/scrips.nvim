@@ -16,7 +16,7 @@ M.run = function()
 
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
   local visual_selection = Get_visual_selection()
-  print(vim.inspect(visual_selection), #visual_selection)
+
   if #visual_selection > 0 then
     lines = visual_selection
   end

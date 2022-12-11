@@ -49,9 +49,6 @@ M.list_files = function()
     table.insert(list, t[#t])
   end
 
-  print(vim.inspect(list))
-
-
   return list
 end
 

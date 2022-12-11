@@ -5,6 +5,6 @@ end
 
 return telescope.register_extension {
   exports = {
-    find_file = require("telescope._extensions.easy-cmd.find-file")
+    find_file = require("telescope._extensions.easy_cmd.find-file")
   }
 }

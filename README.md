@@ -54,3 +54,4 @@ vim.keymap.set('n', '<Leader>eR', scrips.run_file, { noremap = true })
 - [X] Run paragraph
 - [ ] Subfolders to help manage the scripts
 - [ ] Time elapsed
+- [ ] Custom environment files

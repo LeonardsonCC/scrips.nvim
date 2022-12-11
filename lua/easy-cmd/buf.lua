@@ -1,3 +1,12 @@
+local function setup_syntax(path)
+  local easy_cmd_augroup = vim.api.nvim_create_augroup("EasyCmdGroup", { clear = true })
+  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    command = "set syntax=sh",
+    pattern = vim.fn.expand(path) .. "*",
+    group = easy_cmd_augroup,
+  })
+end
+
 function Output_to_buf(bufnr)
   return function(_, data)
     if data then
@@ -24,3 +33,7 @@ function Get_visual_selection()
   end
   return lines
 end
+
+return {
+  setup_syntax = setup_syntax,
+}

@@ -1,4 +1,4 @@
-require('easy-cmd.buf')
+local buf = require('easy-cmd.buf')
 local ui = require('easy-cmd.ui')
 local fs = require('easy-cmd.fs')
 
@@ -8,6 +8,7 @@ M = {
 
 M.setup = function()
   fs.setup_folder(M.path)
+  buf.setup_syntax(M.path)
 end
 
 M.run = function()

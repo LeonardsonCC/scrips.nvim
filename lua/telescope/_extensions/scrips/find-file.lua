@@ -1,6 +1,6 @@
-local has_easy_cmd, easy_cmd = pcall(require, 'cshell')
+local has_easy_cmd, easy_cmd = pcall(require, 'scrips')
 if not has_easy_cmd then
-  error('This plugin requires LeonardsonCC/cshell')
+  error('This plugin requires LeonardsonCC/scrips')
 end
 
 local finders = require('telescope.finders')

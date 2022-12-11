@@ -1,6 +1,6 @@
-local buf = require('cshell.buf')
-local ui = require('cshell.ui')
-local fs = require('cshell.fs')
+local buf = require('scrips.buf')
+local ui = require('scrips.ui')
+local fs = require('scrips.fs')
 
 M = {
   path = "~/.scripts/"

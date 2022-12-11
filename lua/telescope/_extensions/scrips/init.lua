@@ -5,6 +5,6 @@ end
 
 return telescope.register_extension {
   exports = {
-    find_file = require("telescope._extensions.cshell.find-file")
+    find_file = require("telescope._extensions.scrips.find-file")
   }
 }

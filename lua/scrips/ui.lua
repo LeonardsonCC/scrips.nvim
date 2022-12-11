@@ -64,14 +64,14 @@ function M.open_window()
     M.bufnr,
     "n",
     "q",
-    "<CMD>lua require('cshell.ui').close_window()<CR>",
+    "<CMD>lua require('scrips.ui').close_window()<CR>",
     { silent = true }
   )
   vim.api.nvim_buf_set_keymap(
     M.bufnr,
     "n",
     "<ESC>",
-    "<CMD>lua require('cshell.ui').close_window()<CR>",
+    "<CMD>lua require('scrips.ui').close_window()<CR>",
     { silent = true }
   )
 

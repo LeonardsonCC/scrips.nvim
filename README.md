@@ -53,3 +53,4 @@ vim.keymap.set('n', '<Leader>eR', scrips.run_file, { noremap = true })
 - [ ] Run the file based on his header e.g. `#! /bin/bash`
 - [X] Run paragraph
 - [ ] Subfolders to help manage the scripts
+- [ ] Time elapsed

@@ -1,6 +1,8 @@
 # scrips.nvim
 Yep, this is just scrips without the `t`. I know, it's dumb.
 
+![scrips-plugin](https://user-images.githubusercontent.com/21212048/206927919-aa0022d4-89ba-44e8-a629-04dcdf3686ec.png)
+
 ## What this plugin can do for me?
 At the moment, it'll help you to manage scripts.
 - Create a folder to store scripts;

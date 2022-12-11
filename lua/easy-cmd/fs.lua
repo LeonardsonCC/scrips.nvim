@@ -31,4 +31,28 @@ M.open_or_create_file = function(name)
   open_file(name)
 end
 
+M.list_files = function()
+  local scan = require "plenary.scandir"
+  local scripts_folder = Path:new(vim.fn.expand(M.path))
+
+  local scripts_file = scan.scan_dir(scripts_folder:absolute(), { hidden = true })
+
+  local list = {}
+  for _, filepath in pairs(scripts_file) do
+    local t = {}
+    for str in string.gmatch(filepath, '([^/]+)') do
+      table.insert(t, {
+        filepath = filepath,
+        name = str,
+      })
+    end
+    table.insert(list, t[#t])
+  end
+
+  print(vim.inspect(list))
+
+
+  return list
+end
+
 return M

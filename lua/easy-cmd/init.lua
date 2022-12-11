@@ -49,4 +49,8 @@ M.new_script = function()
   fs.open_or_create_file(name)
 end
 
+M.list_scripts = function()
+  return fs.list_files()
+end
+
 return M

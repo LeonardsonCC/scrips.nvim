@@ -34,6 +34,41 @@ function Get_visual_selection()
   return lines
 end
 
+function Get_current_paragraph(bufnr)
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
+  local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+
+  local paragraph = {}
+  local paragraph_start = 0
+  -- goes back
+  for idx = curr_line - 1, 0, -1 do
+    local line = lines[idx]
+    if line == '' then
+      paragraph_start = idx
+      break
+    end
+  end
+
+  -- and forth
+  for idx = paragraph_start + 1, #lines, 1 do
+    local line = lines[idx]
+    if line == '' then
+      break
+    end
+    table.insert(paragraph, line)
+  end
+
+  return paragraph
+end
+
+function Reverse_table(x)
+  local rev = {}
+  for i = #x, 1, -1 do
+    rev[#rev + 1] = x[i]
+  end
+  x = rev
+end
+
 return {
   setup_syntax = setup_syntax,
 }

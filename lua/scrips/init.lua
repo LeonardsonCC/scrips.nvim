@@ -6,21 +6,7 @@ M = {
   path = "~/.scripts/"
 }
 
-M.setup = function()
-  fs.setup_folder(M.path)
-  buf.setup_syntax(M.path)
-end
-
-M.run = function()
-  local bufnr = vim.api.nvim_get_current_buf()
-
-  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
-  local visual_selection = Get_visual_selection()
-
-  if #visual_selection > 0 then
-    lines = visual_selection
-  end
-
+local function run(lines)
   local win_info = ui.open_window()
 
   local cmd = ""
@@ -40,6 +26,25 @@ M.run = function()
       })
     end
   })
+end
+
+M.setup = function()
+  fs.setup_folder(M.path)
+  buf.setup_syntax(M.path)
+end
+
+M.run_paragraph = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = Get_current_paragraph(bufnr)
+
+  run(lines)
+end
+
+M.run_file = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
+
+  run(lines)
 end
 
 M.new_script = function()

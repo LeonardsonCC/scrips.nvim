@@ -1,7 +1,13 @@
-# Scrips
-A plugin that just runs the current file or selection in shell.
+# scrips.nvim
+Yep, this is just scrips without the `t`. I know, it's dumb.
 
-Also creates a folder to easily create and open scripts
+## What this plugin can do for me?
+At the moment, it'll help you to manage scripts.
+- Create a folder to store scripts;
+- Create scripts;
+- Run the script file;
+- Run selection;
+- Telescope your script;
 
 ## Install
 Using Packer
@@ -17,7 +23,7 @@ Setup plugin
 require('scrips').setup()
 ```
 
-Setup the Telescope extensions
+Setup the Telescope extension
 ```lua
 require('telescope').load_extension('scrips')
 ```
@@ -34,8 +40,11 @@ vim.keymap.set('n', '<Leader>se', require('telescope').extensions.scrips.find_fi
 vim.keymap.set('v', '<Leader>en', ':lua require("scrips").run()<CR>', { noremap = true })
 ```
 
-## Next steps
+## What I pretend to do
 - [X] Run selection
 - [X] Folder to manage scripts in plugin
 - [X] Telescope to find scripts managed by the plugin
 - [ ] Better buffer names
+- [ ] Run the file based on his header e.g. `#! /bin/bash`
+- [ ] Run paragraph
+- [ ] Subfolders to help manage the scripts

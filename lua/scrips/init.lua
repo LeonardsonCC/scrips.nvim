@@ -1,6 +1,7 @@
 local buf = require('scrips.buf')
 local ui = require('scrips.ui')
 local fs = require('scrips.fs')
+local Job = require 'plenary.job'
 
 M = {
   path = "~/.scripts/"
@@ -9,24 +10,24 @@ M = {
 local function run(shebang, lines)
   local win_info = ui.open_window()
 
-  local job_opts = {
-    stdout_buffered = true,
-    on_stdout = Output_to_buf(win_info.bufnr),
-    on_stderr = Output_to_buf(win_info.bufnr),
-    on_exit = function(_, _)
-      vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, {
-        "Done!",
-      })
-    end
-  }
-
   local cmd = table.concat(lines, "\n")
 
-  if shebang ~= "" then
-    vim.fn.jobstart({ shebang, '-c', cmd }, job_opts)
-  else
-    vim.fn.jobstart(cmd, job_opts)
+  if shebang == "" then
+    shebang = "/bin/bash"
   end
+
+  Job:new({
+    command = shebang,
+    args = { '-c', cmd },
+    on_stdout = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
+    on_stderr = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
+    on_exit = vim.schedule_wrap(function(j, _)
+      vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, {
+        "",
+        "exited with status " .. j.code,
+      })
+    end)
+  }):sync()
 end
 
 M.setup = function()

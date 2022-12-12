@@ -52,7 +52,7 @@ vim.keymap.set('n', '<Leader>eR', scrips.run_file, { noremap = true })
 - [X] Folder to manage scripts in plugin
 - [X] Telescope to find scripts managed by the plugin
 - [ ] Better buffer names
-- [ ] Run the file based on his header e.g. `#! /bin/bash`
+- [X] Run the file based on his shebang e.g. `#! /bin/bash`
 - [X] Run paragraph
 - [ ] Subfolders to help manage the scripts
 - [ ] Time elapsed

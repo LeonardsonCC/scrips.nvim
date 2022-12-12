@@ -1,7 +1,7 @@
 # scrips.nvim
 Yep, this is just scrips without the `t`. I know, it's dumb.
 
-![scrips-plugin](https://user-images.githubusercontent.com/21212048/206927919-aa0022d4-89ba-44e8-a629-04dcdf3686ec.png)
+![scrips-plugin](https://user-images.githubusercontent.com/21212048/206950366-11d48b7b-1159-4ec3-a782-3a98debbc190.gif)
 
 ## What this plugin can do for me?
 At the moment, it'll help you to manage scripts.

@@ -30,7 +30,7 @@ function M.open_window()
     vim.api.nvim_buf_set_lines(M.bufnr, -1, -1, false, {
       "",
       "",
-      "New command",
+      "running another command",
       "",
     })
     return {
@@ -77,4 +77,3 @@ function M.close_window()
 end
 
 return M
-

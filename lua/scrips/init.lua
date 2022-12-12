@@ -6,12 +6,10 @@ M = {
   path = "~/.scripts/"
 }
 
-local function run(lines)
+local function run(shebang, lines)
   local win_info = ui.open_window()
 
-  local cmd = table.concat(lines, "\n")
-
-  vim.fn.jobstart(cmd, {
+  local job_opts = {
     stdout_buffered = true,
     on_stdout = Output_to_buf(win_info.bufnr),
     on_stderr = Output_to_buf(win_info.bufnr),
@@ -20,7 +18,15 @@ local function run(lines)
         "Done!",
       })
     end
-  })
+  }
+
+  local cmd = table.concat(lines, "\n")
+
+  if shebang ~= "" then
+    vim.fn.jobstart({ shebang, '-c', cmd }, job_opts)
+  else
+    vim.fn.jobstart(cmd, job_opts)
+  end
 end
 
 M.setup = function()
@@ -30,16 +36,18 @@ end
 
 M.run_paragraph = function()
   local bufnr = vim.api.nvim_get_current_buf()
+  local shebang = Get_shebang(bufnr)
   local lines = Get_current_paragraph(bufnr)
 
-  run(lines)
+  run(shebang, lines)
 end
 
 M.run_file = function()
   local bufnr = vim.api.nvim_get_current_buf()
+  local shebang = Get_shebang(bufnr)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
 
-  run(lines)
+  run(shebang, lines)
 end
 
 M.new_script = function()

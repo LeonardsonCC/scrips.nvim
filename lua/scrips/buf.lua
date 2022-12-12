@@ -34,6 +34,15 @@ function Get_visual_selection()
   return lines
 end
 
+function Get_shebang(bufnr)
+  local header = table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, 1, nil), "")
+  local shebang = string.gsub(header, "[!@#$%^&*] ?", "")
+  if shebang ~= header then
+    return shebang
+  end
+  return ""
+end
+
 function Get_current_paragraph(bufnr)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, nil)
   local curr_line = vim.api.nvim_win_get_cursor(0)[1]

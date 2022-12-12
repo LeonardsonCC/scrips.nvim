@@ -1,10 +1,14 @@
 local buf = require('scrips.buf')
 local ui = require('scrips.ui')
 local fs = require('scrips.fs')
-local Job = require 'plenary.job'
+
+local Job = require('plenary.job')
+local a = require('plenary.async')
+local ns_id = vim.api.nvim_create_namespace("")
 
 M = {
-  path = "~/.scripts/"
+  path = "~/.scripts/",
+  loading_symbol = "→",
 }
 
 local function run(shebang, lines)
@@ -16,6 +20,17 @@ local function run(shebang, lines)
     shebang = "/bin/bash"
   end
 
+  local mark_id = nil
+  vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
+    "running...",
+    "",
+  })
+  mark_id = vim.api.nvim_buf_set_extmark(win_info.bufnr, ns_id, 0, 0, {
+    hl_group = "ScripsHighlight",
+    sign_text = M.loading_symbol,
+    sign_hl_group = "ScripsSign",
+  })
+
   Job:new({
     command = shebang,
     args = { '-c', cmd },
@@ -26,8 +41,16 @@ local function run(shebang, lines)
         "",
         "exited with status " .. j.code,
       })
+
+      vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
+        "done!",
+        "",
+      })
+      if mark_id ~= nil then
+        vim.api.nvim_buf_del_extmark(win_info.bufnr, ns_id, mark_id)
+      end
     end)
-  }):sync()
+  }):start()
 end
 
 M.setup = function()

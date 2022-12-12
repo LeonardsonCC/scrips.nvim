@@ -10,7 +10,7 @@ end
 function Output_to_buf(bufnr)
   return function(_, data)
     if data then
-      vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, data)
+      vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, { data })
     end
   end
 end

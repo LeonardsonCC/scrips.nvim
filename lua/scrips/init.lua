@@ -20,6 +20,8 @@ local function run(shebang, lines)
     shebang = "/bin/bash"
   end
 
+  local start_time = os.clock()
+
   local mark_id = nil
   vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
     "running...",
@@ -40,6 +42,7 @@ local function run(shebang, lines)
       vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, {
         "",
         "exited with status " .. j.code,
+        string.format("elapsed time: %.2fs", os.clock() - start_time),
       })
 
       vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {

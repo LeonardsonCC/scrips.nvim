@@ -56,5 +56,5 @@ vim.keymap.set('n', '<Leader>eR', scrips.run_file, { noremap = true })
 - [ ] Run the paragraph based on his shebang e.g. `#! /bin/bash`
 - [X] Run paragraph
 - [ ] Subfolders to help manage the scripts
-- [ ] Time elapsed
+- [X] Time elapsed
 - [ ] Custom environment files

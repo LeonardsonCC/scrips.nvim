@@ -20,29 +20,30 @@ local function run(shebang, lines)
     shebang = "/bin/bash"
   end
 
-  local start_time = os.clock()
-
+  local start_time = 0
   local mark_id = nil
-  vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
-    "running...",
-    "",
-  })
-  mark_id = vim.api.nvim_buf_set_extmark(win_info.bufnr, ns_id, 0, 0, {
-    hl_group = "ScripsHighlight",
-    sign_text = M.loading_symbol,
-    sign_hl_group = "ScripsSign",
-  })
-
   Job:new({
     command = shebang,
     args = { '-c', cmd },
+    on_start = vim.schedule_wrap(function()
+      start_time = os.clock()
+      vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
+        "running...",
+        "",
+      })
+      mark_id = vim.api.nvim_buf_set_extmark(win_info.bufnr, ns_id, 0, 0, {
+        hl_group = "ScripsHighlight",
+        sign_text = M.loading_symbol,
+        sign_hl_group = "ScripsSign",
+      })
+    end),
     on_stdout = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
     on_stderr = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
     on_exit = vim.schedule_wrap(function(j, _)
       vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, {
         "",
         "exited with status " .. j.code,
-        string.format("elapsed time: %.2fs", os.clock() - start_time),
+        string.format("elapsed time: %.4fs", os.clock() - start_time),
       })
 
       vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {

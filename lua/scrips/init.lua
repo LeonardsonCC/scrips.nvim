@@ -1,23 +1,23 @@
-local buf = require('scrips.buf')
-local ui = require('scrips.ui')
-local fs = require('scrips.fs')
+local buf = require 'scrips.buf'
+local ui = require 'scrips.ui'
+local fs = require 'scrips.fs'
 
-local Job = require('plenary.job')
-local a = require('plenary.async')
-local ns_id = vim.api.nvim_create_namespace("")
+local Job = require 'plenary.job'
+local a = require 'plenary.async'
+local ns_id = vim.api.nvim_create_namespace ''
 
 M = {
-  path = "~/.scripts/",
-  loading_symbol = "→",
+  path = '~/.scripts/',
+  loading_symbol = '→',
 }
 
 local function run(shebang, lines)
   local win_info = ui.open_window()
 
-  local cmd = table.concat(lines, "\n")
+  local cmd = table.concat(lines, '\n')
 
-  if shebang == "" then
-    shebang = "/bin/bash"
+  if shebang == '' then
+    shebang = '/bin/bash'
   end
 
   local start_time = 0
@@ -28,38 +28,42 @@ local function run(shebang, lines)
     on_start = vim.schedule_wrap(function()
       start_time = os.clock()
       vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
-        "running...",
-        "",
+        'running...',
+        '',
       })
       mark_id = vim.api.nvim_buf_set_extmark(win_info.bufnr, ns_id, 0, 0, {
-        hl_group = "ScripsHighlight",
+        hl_group = 'ScripsHighlight',
         sign_text = M.loading_symbol,
-        sign_hl_group = "ScripsSign",
+        sign_hl_group = 'ScripsSign',
       })
     end),
     on_stdout = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
     on_stderr = vim.schedule_wrap(Output_to_buf(win_info.bufnr)),
     on_exit = vim.schedule_wrap(function(j, _)
       vim.api.nvim_buf_set_lines(win_info.bufnr, -1, -1, false, {
-        "",
-        "exited with status " .. j.code,
-        string.format("elapsed time: %.4fs", os.clock() - start_time),
+        '',
+        'exited with status ' .. j.code,
+        string.format('elapsed time: %.4fs', os.clock() - start_time),
       })
 
       vim.api.nvim_buf_set_lines(win_info.bufnr, 0, 2, false, {
-        "done!",
-        "",
+        'done!',
+        '',
       })
       if mark_id ~= nil then
         vim.api.nvim_buf_del_extmark(win_info.bufnr, ns_id, mark_id)
       end
-    end)
+    end),
   }):start()
 end
 
 M.setup = function()
   fs.setup_folder(M.path)
   buf.setup_syntax(M.path)
+
+  vim.api.nvim_create_user_command('ScripsNewScript', M.new_script, {})
+  vim.api.nvim_create_user_command('ScripsRunParagraph', M.run_paragraph, {})
+  vim.api.nvim_create_user_command('ScripsRunFile', M.run_file, {})
 end
 
 M.run_paragraph = function()
@@ -79,9 +83,9 @@ M.run_file = function()
 end
 
 M.new_script = function()
-  local name = vim.fn.input("File name: ")
-  if name == "" then
-    name = "scratch"
+  local name = vim.fn.input 'File name: '
+  if name == '' then
+    name = 'scratch'
   end
   fs.open_or_create_file(name)
 end
